@@ -83,7 +83,7 @@ export const sendEmail = async ( email , newUser) => {
               <p>Thank you for signing up. Please verify your email address to activate your account.</p>
               <p>Click the button below to verify your email:</p>
               <a 
-                href="https://master.d203wypx8gnf3n.amplifyapp.com/verify?id=${newUser._id}" 
+                href="https://poltic.in/verify?id=${newUser._id}" 
                 class="verify-button">
                 Verify Email
               </a>
