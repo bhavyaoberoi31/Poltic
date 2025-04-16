@@ -1,15 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import {
-  AiOutlineComment,
-  AiOutlineHeart,
-  AiOutlineShareAlt,
-  AiOutlinePause
-} from "react-icons/ai";
+import { useRef, useState, useEffect } from "react";
+import { AiOutlineComment, AiOutlineHeart, AiOutlineShareAlt, AiOutlinePause } from "react-icons/ai";
 import { CiMenuKebab } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { reportReel } from "../features/report/reportThunk";
 import { Loader } from "./Loader";
-import { useNavigate } from "react-router-dom";
 
 const Modal = ({ children, isOpen }) => {
   if (!isOpen) return null;
@@ -22,61 +17,47 @@ const Modal = ({ children, isOpen }) => {
   );
 };
 
-const ReelPage = ({ reel, reelI, isMuted }) => {
-  const { data: user } = useSelector((state) => state.auth);
+const ReelPage = ({ reel, isMuted, videoRef }) => {
   const navigate = useNavigate();
+  const { data: user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const videoRef = useRef(null);
+  const localRef = useRef(null);
 
   const [isPlaying, setIsPlaying] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
 
   const togglePlayPause = (e) => {
     e.stopPropagation();
-    if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.play();
+    if (localRef.current) {
+      if (localRef.current.paused) {
+        localRef.current.play();
         setIsPlaying(true);
       } else {
-        videoRef.current.pause();
+        localRef.current.pause();
         setIsPlaying(false);
       }
     }
   };
 
   useEffect(() => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.play().catch((err) => console.log(err));
-      } else {
-        videoRef.current.pause();
-      }
+    if (localRef.current) {
+      localRef.current.muted = isMuted;
     }
-  }, [isPlaying]);
+  }, [isMuted]);
 
-  const handleReport = async () => {
-    try {
-      await dispatch(
-        reportReel({
-          creatorId: reel?.userId,
-          reporterId: user?._id,
-          reelId: reel?._id,
-        })
-      ).unwrap();
-    } catch (error) {
-      console.error("Error reporting reel:", error);
+  useEffect(() => {
+    if (localRef.current && videoRef) {
+      videoRef(localRef.current);
     }
-  };
+  }, [videoRef]);
 
   if (!reel) return <Loader />;
 
   return (
-    <div
-      key={reel._id}
-      className="reel w-[100vw] md:w-[400px] md:h-[calc(100vh-83px)] flex items-center justify-center snap-start relative my-2 sm:my-0 sm:rounded-xl overflow-hidden"
-    >
+    <div key={reel._id} className="reel w-[100vw] md:w-[400px] md:h-[calc(100vh-83px)] flex items-center justify-center snap-start relative my-2 sm:my-0 sm:rounded-xl overflow-hidden">
       <video
-        ref={videoRef}
+        ref={localRef}
+        data-reel-id={reel._id}
         src={reel.video}
         loop
         muted={isMuted}
@@ -85,38 +66,29 @@ const ReelPage = ({ reel, reelI, isMuted }) => {
       />
       {!isPlaying && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <AiOutlinePause
-            size={80}
-            className="text-white opacity-80 transition duration-300"
-          />
+          <AiOutlinePause size={80} className="text-white opacity-80 transition duration-300" />
         </div>
       )}
-
       <div className="absolute bottom-8 flex gap-3 left-4 text-white">
-        <div>
-          <img
-            src={
-              reel.user?.profileImage ||
-              "https://img.freepik.com/premium-vector/blog-design_24877-32255.jpg?w=740"
-            }
-            alt="Profile"
-            className="h-12 w-12 rounded-full my-2 cursor-pointer"
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate(
-                user?._id !== reel.user?._id ? "/creator-profile" : "/user-profile",
-                {
-                  state: {
-                    creatorId: reel.user?._id,
-                    firstName: reel.user?.firstName,
-                    lastName: reel.user?.lastName,
-                    userId: user?._id,
-                  },
-                }
-              );
-            }}
-          />
-        </div>
+        <img
+          src={reel.user?.profileImage || "https://img.freepik.com/premium-vector/blog-design_24877-32255.jpg?w=740"}
+          alt="Profile"
+          className="h-12 w-12 rounded-full my-2 cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(
+              user?._id !== reel.user?._id ? "/creator-profile" : "/user-profile",
+              {
+                state: {
+                  creatorId: reel.user?._id,
+                  firstName: reel.user?.firstName,
+                  lastName: reel.user?.lastName,
+                  userId: user?._id,
+                },
+              }
+            );
+          }}
+        />
         <div>
           <p className="font-bold mt-1">{`${reel.user?.firstName || ""} ${reel.user?.lastName || ""}`}</p>
           <p>{reel.description}</p>
@@ -124,40 +96,29 @@ const ReelPage = ({ reel, reelI, isMuted }) => {
       </div>
 
       <div className="absolute sm:hidden h-full text-white right-4 flex flex-col justify-end my-2">
-        <div>
-          <button className="flex flex-col items-center p-2">
-            <AiOutlineHeart size={28} />
-            <span className="text-xs">123</span>
-          </button>
-          <button className="flex flex-col items-center p-2">
-            <AiOutlineComment size={28} />
-            <span className="text-xs">45</span>
-          </button>
-          <button className="flex flex-col items-center p-2">
-            <AiOutlineShareAlt size={28} />
-            <span className="text-xs">Share</span>
-          </button>
-          <CiMenuKebab
-            size={28}
-            onClick={() => setModalOpen(true)}
-            className="m-2 items-center"
-          />
-        </div>
+        <button className="flex flex-col items-center p-2">
+          <AiOutlineHeart size={28} />
+          <span className="text-xs">123</span>
+        </button>
+        <button className="flex flex-col items-center p-2">
+          <AiOutlineComment size={28} />
+          <span className="text-xs">45</span>
+        </button>
+        <button className="flex flex-col items-center p-2">
+          <AiOutlineShareAlt size={28} />
+          <span className="text-xs">Share</span>
+        </button>
+        <CiMenuKebab size={28} onClick={() => setModalOpen(true)} className="m-2 items-center" />
       </div>
 
       <Modal isOpen={modalOpen}>
         <div className="flex flex-col">
           <div className="flex justify-end">
-            <button
-              className="mb-4 text-xl"
-              onClick={() => setModalOpen(false)}
-            >
-              ✕
-            </button>
+            <button className="mb-4 text-xl" onClick={() => setModalOpen(false)}>✕</button>
           </div>
           <div>
             <hr />
-            <button onClick={handleReport}>Report Video</button>
+            <button onClick={() => dispatch(reportReel({ creatorId: reel.userId, reporterId: user._id, reelId: reel._id }))}>Report Video</button>
           </div>
         </div>
       </Modal>
