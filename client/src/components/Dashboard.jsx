@@ -142,7 +142,7 @@ const Dashboard = () => {
 
             <div>
                 {error?.status === 404 ? (
-                    <p className="text-center w-full">Upload your first video now</p>
+                    <p className="text-center text-blue-400 mt-2 w-full">Upload your first video now</p>
                 ) : (
                     <div className="sm:m-4 font-roboto">
                         <p className="font-semibold text-[20px] py-2 font-inter mt-5">Top Performing News</p>

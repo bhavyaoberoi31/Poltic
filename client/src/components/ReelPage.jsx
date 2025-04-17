@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { reportReel } from "../features/report/reportThunk";
 import { Loader } from "./Loader";
+import { FaUser, FaUserCircle } from "react-icons/fa";
 
 const Modal = ({ children, isOpen }) => {
   if (!isOpen) return null;
@@ -70,25 +71,46 @@ const ReelPage = ({ reel, isMuted, videoRef }) => {
         </div>
       )}
       <div className="absolute bottom-8 flex gap-3 left-4 text-white">
-        <img
-          src={reel.user?.profileImage || "https://img.freepik.com/premium-vector/blog-design_24877-32255.jpg?w=740"}
-          alt="Profile"
-          className="h-12 w-12 rounded-full my-2 cursor-pointer"
-          onClick={(e) => {
-            e.stopPropagation();
-            navigate(
-              user?._id !== reel.user?._id ? "/creator-profile" : "/user-profile",
-              {
-                state: {
-                  creatorId: reel.user?._id,
-                  firstName: reel.user?.firstName,
-                  lastName: reel.user?.lastName,
-                  userId: user?._id,
-                },
-              }
-            );
-          }}
-        />
+        {
+            reel.user.profileImage ? 
+              <img
+              src={reel.user?.profileImage }
+              alt="Profile"
+              className="h-12 w-12 rounded-full my-2 cursor-pointer object-cover"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(
+                  user?._id !== reel.user?._id ? "/creator-profile" : "/user-profile",
+                  {
+                    state: {
+                      creatorId: reel.user?._id,
+                      firstName: reel.user?.firstName,
+                      lastName: reel.user?.lastName,
+                      userId: user?._id,
+                      userImage: reel.user?.profileImage,
+                    },
+                  }
+                );
+              }}
+            /> 
+            : <FaUserCircle size={48} className="text-black" 
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(
+                user?._id !== reel.user?._id ? "/creator-profile" : "/user-profile",
+                {
+                  state: {
+                    creatorId: reel.user?._id,
+                    firstName: reel.user?.firstName,
+                    lastName: reel.user?.lastName,
+                    userId: user?._id,
+                    userImage: reel.user?.profileImage,
+                  },
+                }
+              );
+            }}
+            />
+        }
         <div>
           <p className="font-bold mt-1">{`${reel.user?.firstName || ""} ${reel.user?.lastName || ""}`}</p>
           <p>{reel.description}</p>

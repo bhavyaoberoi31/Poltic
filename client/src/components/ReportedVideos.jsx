@@ -24,7 +24,7 @@ const ReportedVideos = () => {
                         <div className="hidden md:flex">
                             <ProfileSidebar />
                         </div>
-                        <div>
+                        <div className="w-full">
                             {/* <div className="sm:mx-4 font-roboto w-[90vw] md:w-fit">
                                 <p className="font-semibold text-[20px] pb-2 font-inter">Reported Videos</p>
                                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 justify-center items-center mx-auto max-w-7xl">
@@ -51,7 +51,7 @@ const ReportedVideos = () => {
                                     ))}
                                 </div>
                             </div> */}
-                            <div className="text-green-600">
+                            <div className="block w-full text-center text-green-600 mx-auto">
                                 Congrats, No Videos Of Yours have been reported yet.
                             </div>
                         </div>

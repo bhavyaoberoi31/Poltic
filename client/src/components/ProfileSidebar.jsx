@@ -102,14 +102,17 @@ const ProfileSidebar = () => {
             {/* Modal */}
             {isPopupOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+                    <div className="flex flex-col bg-white p-6 rounded-lg shadow-lg w-80">
                         <h2 className="text-lg font-semibold mb-4">Update Profile Image</h2>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleFileChange}
-                            className="mb-4 w-full"
-                        />
+                        <label className="mb-4 w-full border border-dashed border-gray-300 rounded p-4 text-center cursor-pointer hover:bg-gray-50">
+                            <span className="text-gray-600">📁 Click here to upload</span>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleFileChange}
+                                className="hidden"
+                            />
+                        </label>
                         <div className="flex justify-end gap-2">
                             <button
                                 onClick={() => setIsPopupOpen(false)}

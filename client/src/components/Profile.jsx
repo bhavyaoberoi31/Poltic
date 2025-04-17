@@ -7,10 +7,11 @@ import Sidebar from "./Sidebar";
 import { useEffect, useState } from "react";
 import { useReels } from "../features/reel/customeHooks";
 import defaultThumbnail from '../assets/image2.png';
+import { FaUser, FaUserCircle } from "react-icons/fa";
 
 const Profile = () => {
     const location = useLocation();
-    const { creatorId, firstName, lastName, userId } = location.state || {};
+    const { creatorId, firstName, lastName, userId, userImage } = location.state || {};
     const dispatch = useDispatch();
     const [optimisticFollow, setOptimisticFollow] = useState(false);
     const [isSubscribed, setIsSubscribe] = useState(false);
@@ -178,7 +179,11 @@ const Profile = () => {
                 <div className="flex-1 overflow-y-scroll custom-scrollbar ml-0 md:ml-[227px] pt-6 px-5">
                     <div className="w-full flex flex-col items-center justify-center mx-auto p-5">
                         <div>
-                            <img src={creatorId?.profileImage || img} alt="" />
+                            { userImage ? 
+                            <img src={userImage} alt="Profile"
+                            className="w-32 h-32 md:w-40 md:h-36 rounded-full object-cover " />
+                            : <FaUserCircle size={120} className="text-black" />
+                            }
                         </div>
                         <div className="flex flex-col items-center">
                             <p className="md:text-[31px] text-[19px] uppercase">{firstName} {lastName}</p>
@@ -205,7 +210,7 @@ const Profile = () => {
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 mt-5 gap-6 justify-center items-center mx-auto px-4 md:max-w-7xl">
                         {reels && reels.length > 0 && reels.map((short) => (
                             <Link
-                                to={`/short/${short.id}`}
+                                to={`/short/${short._id}`}
                                 key={short.id}
                                 className="flex flex-col w-full max-w-[200px] mx-auto"
                             >
