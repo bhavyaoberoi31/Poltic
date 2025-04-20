@@ -6,6 +6,7 @@ import { captureFrameFromVideo } from "../utils/captureFrameFromVideo";
 import img from '../assets/thumb.png';
 import { GoGraph } from "react-icons/go";
 import { MdDelete } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import { deleteReel } from "../features/reel/reelThunk";
 
 const DeleteModel = ({ onConfirm, onCancel, loading }) => (
@@ -35,6 +36,7 @@ const DeleteModel = ({ onConfirm, onCancel, loading }) => (
 const Dashboard = () => {
     const { data: user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const {
         data: reels,
@@ -134,7 +136,9 @@ const Dashboard = () => {
                     <p className="text-[24px] font-semibold">{localReels.length}</p>
                     <p className="text-[17px] font-normal text-[#999999]">Total videos</p>
                 </div>
-                <div className="w-[108px] md:w-[258px] h-[120px] md:h-[158px] border border-[#C5C5C5] rounded-[10px] flex flex-col items-center justify-center">
+                <div className="w-[108px] md:w-[258px] h-[120px] md:h-[158px] border border-[#C5C5C5] rounded-[10px] flex flex-col items-center justify-center"
+                onClick={() => navigate("/user-subscriptions")}
+                >
                     <p className="text-[24px] font-semibold">10</p>
                     <p className="text-[17px] font-normal text-[#999999]">Followers</p>
                 </div>
@@ -146,14 +150,14 @@ const Dashboard = () => {
                 ) : (
                     <div className="sm:m-4 font-roboto">
                         <p className="font-semibold text-[20px] py-2 font-inter mt-5">Top Performing News</p>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 justify-center items-center mx-auto max-w-7xl">
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mx-auto max-w-7xl">
                             {localReels.slice(0, 4).slice().reverse().map((short) => (
-                                <div key={short._id}>
+                                <div className="" key={short._id}>
                                     <Link to={`/short/${short._id}`} className="flex flex-col">
                                         <img
                                             src={ short.thumbnail || thumbnails[short._id] || img }
                                             alt={short.title}
-                                            className="h-[265px] w-[160px] sm:w-[200px] object-cover rounded-lg"
+                                            className="h-[265px] w-[160px] sm:w-[200px] object-cover rounded-lg mx-auto"
                                             onError={(e) => {
                                                 const fallback = short.thumbnail && e.currentTarget.src !== short.thumbnail ? short.thumbnail : img;
                                                 if (e.currentTarget.src !== fallback) {
@@ -162,10 +166,10 @@ const Dashboard = () => {
                                             }}
                                         />
                                     </Link>
-                                    <div className="flex items-center justify-start w-fit text-center">
+                                    <div className="flex items-center justify-start w-full text-wrap text-center">
                                         <div className="flex flex-col items-start">
                                             <p className="font-light mt-2">{short.title}</p>
-                                            <p className="text-[14px] font-light">{short.views} views</p>
+                                            {/* <p className="text-[14px] font-light">{short.views} views</p> */}
                                         </div>
                                         <MdDelete
                                             onClick={() => {

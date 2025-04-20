@@ -10,6 +10,7 @@ import {
 import { CiMenuKebab } from "react-icons/ci";
 import { getReelById } from "../features/reel/reelThunk";
 import { reportReel } from "../features/report/reportThunk";
+import { FaUser, FaUserCircle } from "react-icons/fa";
 
 const Modal = ({ children, isOpen }) => {
   if (!isOpen) return null;
@@ -109,13 +110,13 @@ const ClickedVideo = () => {
       
             <div className="absolute bottom-8 flex gap-3 left-4 text-black">
               <div>
+                {short.user?.profileImage ?
                 <img
                   src={
-                    short.user?.profileImage ||
-                    "https://img.freepik.com/premium-vector/blog-design_24877-32255.jpg?w=740"
+                    short.user?.profileImage
                   }
                   alt="Profile"
-                  className="h-12 w-12 rounded-full my-2 cursor-pointer"
+                  className="h-12 w-12 object-cover rounded-full my-2 cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
                     navigate(
@@ -130,7 +131,24 @@ const ClickedVideo = () => {
                       }
                     );
                   }}
+                /> :
+                <FaUserCircle size={48} className="text-black" 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(
+                    short?._id !== short.user?._id ? "/creator-profile" : "/user-profile",
+                    {
+                      state: {
+                        creatorId: short.user?._id,
+                        firstName: short.user?.firstName,
+                        lastName: short.user?.lastName,
+                        userId: short.user?._id,
+                      },
+                    }
+                  );
+                }}
                 />
+              }
               </div>
               <div>
                 <p className="font-bold mt-1">{`${short.user?.firstName || ""} ${short.user?.lastName || ""}`}</p>
