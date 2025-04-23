@@ -3,8 +3,12 @@ import Nav from "./Nav"
 import ProfileSidebar from "./ProfileSidebar"
 import Sidebar from "./Sidebar"
 import UserProfile from "./UserProfile"
+import img from "../assets/profileimg.png"
+import { useNavigate } from "react-router-dom";
 
 const Subscriptions = () => {
+
+    const navigate = useNavigate();
     return (
         <div className="flex flex-col h-screen font-roboto">
             <div className="z-50 fixed top-0 w-full ">
@@ -25,9 +29,69 @@ const Subscriptions = () => {
                             <div className="mx-auto font-inter w-full flex flex-col items-center justify-center">
                                 <p className="text-center md:text-start font-semibold text-[20px] pb-4 font-inter">All Followed  Channels</p>
                                 <div className="grid w-full sm:grid-cols-2 gap-4 sm:gap-10 justify-center sm:mb-10 items-center mx-auto  sm:max-w-7xl">
+                                <div className="flex gap-12 w-full">
+                                         <div className="flex gap-12 w-full"
+                                         onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigate(
+                                               "/creator-profile",
+                                              {
+                                                state: {
+                                                  creatorId: "680701825777a65baa93dfb3",
+                                                  firstName: "Bhavya",
+                                                  lastName: "",
+                                                  userId: "680701825777a65baa93dfb3",
+                                                },
+                                              }
+                                            );
+                                          }}
+                                         >
+                                            <div>
+                                                <img src={img} alt="" className="h-[75px] w-[75px]" />
+                                            </div>
+                                            <div>
+                                                <p className="text-[18px] ">Bhavya Oberoi</p>
+                                                <p className="text-[13px] text-[#B7B7B7]">@bhavya</p>
+                                                <p className="text-[13px] text-[#065FD4]">10<span className="text-[#B7B7B7]">Followers</span></p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <button className="bg-[#F0F0F0] rounded-md text-[#717171] text-[12px] px-3 py-2">Followed</button>
+                                        </div>
+                                       </div>
+                                       <div className="flex gap-12 w-full">
+                                         <div className="flex gap-12 w-full"
+                                         onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigate(
+                                               "/creator-profile",
+                                              {
+                                                state: {
+                                                  creatorId: "680708485777a65baa93dfd0",
+                                                  firstName: "Poltic",
+                                                  lastName: "",
+                                                  userId: "680708485777a65baa93dfd0",
+                                                },
+                                              }
+                                            );
+                                          }}
+                                         >
+                                            <div>
+                                                <img src={img} alt="" className="h-[75px] w-[75px]" />
+                                            </div>
+                                            <div>
+                                                <p className="text-[18px] ">PolTic</p>
+                                                <p className="text-[13px] text-[#B7B7B7]">@poltic</p>
+                                                <p className="text-[13px] text-[#065FD4]">10<span className="text-[#B7B7B7]">Followers</span></p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <button className="bg-[#F0F0F0] rounded-md text-[#717171] text-[12px] px-3 py-2">Followed</button>
+                                        </div>
+                                       </div>
                                     {SubscribedChannels.map((channel) => (
-                                       <div className="flex gap-12">
-                                         <div className="flex gap-12">
+                                       <div className="flex gap-12 w-full">
+                                         <div className="flex gap-12 w-full">
                                             <div>
                                                 <img src={channel.profile} alt="" className="h-[75px] w-[75px]" />
                                             </div>
