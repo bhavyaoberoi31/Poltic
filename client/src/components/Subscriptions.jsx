@@ -5,6 +5,7 @@ import Sidebar from "./Sidebar"
 import UserProfile from "./UserProfile"
 import img from "../assets/profileimg.png"
 import { useNavigate } from "react-router-dom";
+import { FaUser, FaUserCircle } from "react-icons/fa";
 
 const Subscriptions = () => {
 
@@ -47,7 +48,8 @@ const Subscriptions = () => {
                                           }}
                                          >
                                             <div>
-                                                <img src={img} alt="" className="h-[75px] w-[75px]" />
+                                                {/* <img src={img} alt="" className="h-[75px] w-[75px]" /> */}
+                                                <FaUserCircle size={75} className="text-black"/>
                                             </div>
                                             <div>
                                                 <p className="text-[18px] ">Bhavya Oberoi</p>
@@ -77,7 +79,7 @@ const Subscriptions = () => {
                                           }}
                                          >
                                             <div>
-                                                <img src={img} alt="" className="h-[75px] w-[75px]" />
+                                                <FaUserCircle size={75} className="text-black"/>
                                             </div>
                                             <div>
                                                 <p className="text-[18px] ">PolTic</p>
@@ -93,7 +95,7 @@ const Subscriptions = () => {
                                        <div className="flex gap-12 w-full">
                                          <div className="flex gap-12 w-full">
                                             <div>
-                                                <img src={channel.profile} alt="" className="h-[75px] w-[75px]" />
+                                                <FaUserCircle size={75} className="text-black"/>
                                             </div>
                                             <div>
                                                 <p className="text-[18px] ">{channel.name}</p>
