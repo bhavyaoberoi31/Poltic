@@ -29,9 +29,9 @@ const Subscriptions = () => {
                         <div className="w-full">
                             <div className="mx-auto font-inter w-full flex flex-col items-center justify-center">
                                 <p className="text-center md:text-start font-semibold text-[20px] pb-4 font-inter">All Followed  Channels</p>
-                                <div className="grid w-full sm:grid-cols-2 gap-4 sm:gap-10 justify-center sm:mb-10 items-center mx-auto  sm:max-w-7xl">
-                                <div className="flex gap-12 w-full">
-                                         <div className="flex gap-12 w-full"
+                                <div className="grid w-full sm:grid-cols-2 sm:mb-10 gap-4 sm:gap-10 items-center mx-auto  sm:max-w-7xl">
+                                <div className="flex w-full justify-between items-center">
+                                         <div className="flex gap-3 w-full"
                                          onClick={(e) => {
                                             e.stopPropagation();
                                             navigate(
@@ -49,7 +49,7 @@ const Subscriptions = () => {
                                          >
                                             <div>
                                                 {/* <img src={img} alt="" className="h-[75px] w-[75px]" /> */}
-                                                <FaUserCircle size={75} className="text-black"/>
+                                                <FaUserCircle size={60} className="text-black"/>
                                             </div>
                                             <div>
                                                 <p className="text-[18px] ">Bhavya Oberoi</p>
@@ -62,7 +62,7 @@ const Subscriptions = () => {
                                         </div>
                                        </div>
                                        <div className="flex gap-12 w-full">
-                                         <div className="flex gap-12 w-full"
+                                         <div className="flex gap-3 w-full"
                                          onClick={(e) => {
                                             e.stopPropagation();
                                             navigate(
@@ -79,7 +79,7 @@ const Subscriptions = () => {
                                           }}
                                          >
                                             <div>
-                                                <FaUserCircle size={75} className="text-black"/>
+                                                <FaUserCircle size={60} className="text-black"/>
                                             </div>
                                             <div>
                                                 <p className="text-[18px] ">PolTic</p>
@@ -92,10 +92,10 @@ const Subscriptions = () => {
                                         </div>
                                        </div>
                                     {SubscribedChannels.map((channel) => (
-                                       <div className="flex gap-12 w-full">
-                                         <div className="flex gap-12 w-full">
+                                       <div className="flex justify-between w-full">
+                                         <div className="flex gap-3 w-full">
                                             <div>
-                                                <FaUserCircle size={75} className="text-black"/>
+                                                <FaUserCircle size={60} className="text-black"/>
                                             </div>
                                             <div>
                                                 <p className="text-[18px] ">{channel.name}</p>

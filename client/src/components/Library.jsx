@@ -103,9 +103,9 @@ const Library = () => {
 
         setUploading(true);
         const formData = new FormData();
-        formData.append("title", "sadsa");
-        formData.append("description", "asdada");
-        formData.append("userId", "6805030b28b6d9d110c0ec83");
+        formData.append("title", title);
+        formData.append("description", description);
+        formData.append("userId", user._id);
         formData.append("video", selectedFile); // this is a File object
         formData.append("thumbnail", thumbnail);
         
@@ -232,7 +232,7 @@ const Library = () => {
                                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 justify-center items-center mx-auto md:max-w-7xl">
                                     {reels && reels.length > 0 && reels.slice().reverse().map((short) => (
                                         <Link
-                                            to={`/short/${short.id}`}
+                                            to={`/short/${short._id}`}
                                             key={short.id}
                                             className="flex flex-col"
                                         >
