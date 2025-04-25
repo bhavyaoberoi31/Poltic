@@ -2,6 +2,12 @@ import mongoose from "mongoose";
 import Reels from "../model/Reels.js";
 import Report from "../model/Report.js";
 
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const serverUrl = process.env.SERVER_URL || "http://localhost:5000";
+
 export const createReel = async (req, res) => {
   try {
     const { title, description, userId } = req.body;
@@ -13,9 +19,9 @@ export const createReel = async (req, res) => {
       return res.status(400).json({ message: "Video file is required" });
     }
 
-    const videoPath = `http://localhost:5000/uploads/reels/${videoFile.filename}`;
+    const videoPath = `${serverUrl}/uploads/reels/${videoFile.filename}`;
     const thumbnailPath = thumbnailFile
-      ? `http://localhost:5000/uploads/reels/${thumbnailFile.filename}`
+      ? `${serverUrl}/uploads/reels/${thumbnailFile.filename}`
       : "";
 
     const reel = new Reels({

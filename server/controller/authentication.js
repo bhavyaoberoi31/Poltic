@@ -2,6 +2,11 @@ import User from "../model/User.js";
 import jwt from 'jsonwebtoken'
 import bcrypt from "bcryptjs"
 import { sendEmail } from "./sendEmail.js";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const serverUrl = process.env.SERVER_URL || "http://localhost:5000";
 const createToken = async (user) => {
     try {
         const token = jwt.sign(
@@ -123,7 +128,7 @@ export const updateProfile = async (req, res) => {
       let updates = { ...req.body };
   
       if (req.file) {
-        const imageUrl = `http://localhost:5000/uploads/profiles/${req.file.filename}`;
+        const imageUrl = `${serverUrl}/uploads/profiles/${req.file.filename}`;
         updates = {
             ...updates,
             profileImage: imageUrl,
