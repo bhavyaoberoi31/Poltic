@@ -2,16 +2,27 @@ import mongoose from "mongoose";
 import Reels from "../model/Reels.js";
 import Report from "../model/Report.js";
 
-// Create a new reel
 export const createReel = async (req, res) => {
   try {
-    const { video, title, description, thumbnail, userId } = req.body;
-    console.log(userId);
+    const { title, description, userId } = req.body;
+    
+    const videoFile = req.files.video?.[0];
+    const thumbnailFile = req.files.thumbnail?.[0];
+
+    if (!videoFile) {
+      return res.status(400).json({ message: "Video file is required" });
+    }
+
+    const videoPath = `http://localhost:5000/uploads/reels/${videoFile.filename}`;
+    const thumbnailPath = thumbnailFile
+      ? `http://localhost:5000/uploads/reels/${thumbnailFile.filename}`
+      : "";
+
     const reel = new Reels({
-      video,
+      video: videoPath,
       title,
       description,
-      thumbnail,
+      thumbnail: thumbnailPath,
       userId,
     });
 
@@ -22,6 +33,7 @@ export const createReel = async (req, res) => {
     res.status(500).json({ message: "Error creating reel", error: error.message });
   }
 };
+
 
 export const deleteReelById = async (req, res) => {
   try {

@@ -95,24 +95,22 @@ const Library = () => {
 
     const handleUpload = async () => {
         setUploadComplete(false); 
-
+        console.log('hiss');
+        
         if (!selectedFile) return alert("Please select a file to upload.");
         if (!title) return alert("Please provide the title");
         if (!description) return alert("Please provide the Description");
 
         setUploading(true);
-        const payload = { title, description, userId: user._id };
-
+        const formData = new FormData();
+        formData.append("title", "sadsa");
+        formData.append("description", "asdada");
+        formData.append("userId", "6805030b28b6d9d110c0ec83");
+        formData.append("video", selectedFile); // this is a File object
+        formData.append("thumbnail", thumbnail);
+        
         try {
-            if (thumbnail) {
-                const thumbnailUrl = await uploadFileToS3(thumbnail);
-                payload.thumbnail = thumbnailUrl;
-            }
-
-            const uploadedFileUrl = await uploadFileToS3(selectedFile);
-            payload.video = uploadedFileUrl;
-
-            await dispatch(uploadReel(payload)).unwrap();
+            await dispatch(uploadReel(formData)).unwrap();
 
             setTitle("");
             setDescription("");

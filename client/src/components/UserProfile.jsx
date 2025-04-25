@@ -52,13 +52,9 @@ const UserProfile = () => {
     const handleUpdate = async () => {
         setLoadingUpload(true);
         if (selectedFile) {
-            console.log("Selected file:", selectedFile);
-            const url = await uploadFileToS3(selectedFile);
-            console.log(url);
-            let updates = {
-                profileImage: url,
-            };
-            dispatch(updateProfile({ id: user._id, updates }))
+            const formData = new FormData();
+            formData.append("profileImage", selectedFile);
+            dispatch(updateProfile({ id: user._id, formData }))
                 .unwrap()
                 .then((payload) => {
                     console.log(payload);

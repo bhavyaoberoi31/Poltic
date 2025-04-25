@@ -76,13 +76,26 @@ export const logout = createAsyncThunk(
 );
 
 
-export const updateProfile = createAsyncThunk('auth/update', async ( {id , updates }  , {rejectWithValue} )=> {
-    try {
-        console.log("this is from updates " , updates)
-        const response = await axios.put(`${BASE_URL}/users/update?id=${id}` , updates , {withCredentials:true}); 
-         return response.data ; 
-    } catch (error) {
-       const errorMessage = error.response?.data?.message || "Somethign went worng while updating the profile"
-       return rejectWithValue(errorMessage); 
+export const updateProfile = createAsyncThunk(
+    'auth/update',
+    async ({ id, formData }, { rejectWithValue }) => {
+      try {
+        const response = await axios.put(
+          `${BASE_URL}/users/update?id=${id}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+            withCredentials: true,
+          }
+        );
+        return response.data;
+      } catch (error) {
+        const errorMessage =
+          error.response?.data?.message || "Something went wrong while updating the profile";
+        return rejectWithValue(errorMessage);
+      }
     }
-})
+  );
+  

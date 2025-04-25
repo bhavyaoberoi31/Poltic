@@ -4,24 +4,28 @@ import { BASE_URL } from "../../constants/info";
 // Upload Reel
 export const uploadReel = createAsyncThunk(
     "reels/upload",
-    async ({ title, description, video , thumbnail , userId  }, { rejectWithValue }) => {
-        try {
-            const response = await axios.post(
-                `${BASE_URL}/reels/create`,
-                {title , description , video , thumbnail , userId },
-                {
-                    headers: { "Content-Type": "application/json" },
-                    withCredentials: true,
-                }
-            );
-            return response.data;
-        } catch (error) {
-            console.log(error)
-            const errorMessage = error.response?.data?.message || "Failed to upload reel";
-            return rejectWithValue(errorMessage);
-        }
+    async (formData, { rejectWithValue }) => {
+      try {
+        const response = await axios.post(
+          `${BASE_URL}/reels/create`,
+          formData,
+          {
+            headers: {
+              // Do NOT set Content-Type manually for FormData
+              // It will be set automatically as 'multipart/form-data' with proper boundary
+            },
+            withCredentials: true,
+          }
+        );
+        return response.data;
+      } catch (error) {
+        console.log(error);
+        const errorMessage = error.response?.data?.message || "Failed to upload reel";
+        return rejectWithValue(errorMessage);
+      }
     }
-);
+  );
+  
 
 // Get All Reels
 export const getReels = createAsyncThunk(
