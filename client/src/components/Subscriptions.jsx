@@ -48,8 +48,8 @@ const Subscriptions = () => {
                                           }}
                                          >
                                             <div>
-                                                {/* <img src={img} alt="" className="h-[75px] w-[75px]" /> */}
-                                                <FaUserCircle size={60} className="text-black"/>
+                                                <img src={"https://poltic.in/api/uploads/profiles/1745593676823-96162421.jpg"} alt="" className="h-[75px] w-[75px] rounded-full object-cover" />
+                                                {/* <FaUserCircle size={60} className="text-black"/> */}
                                             </div>
                                             <div>
                                                 <p className="text-[18px] ">Bhavya Oberoi</p>
@@ -79,7 +79,7 @@ const Subscriptions = () => {
                                           }}
                                          >
                                             <div>
-                                                <FaUserCircle size={60} className="text-black"/>
+                                                <img src={"https://poltic.in/api/uploads/profiles/1745593704707-520438465.png"} alt="" className="h-[75px] w-[75px] rounded-full object-cover" />
                                             </div>
                                             <div>
                                                 <p className="text-[18px] ">PolTic</p>

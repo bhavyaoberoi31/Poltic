@@ -72,7 +72,7 @@ const ReelPage = ({ reel, isMuted, videoRef }) => {
       )}
       <div className="absolute bottom-8 flex gap-3 left-4 text-white">
         {
-            reel.user.profileImage ? 
+            reel.user?.profileImage ? 
               <img
               src={reel.user?.profileImage }
               alt="Profile"
