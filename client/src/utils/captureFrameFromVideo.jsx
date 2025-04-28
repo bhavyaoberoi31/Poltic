@@ -6,7 +6,7 @@ export const captureFrameFromVideo = (videoUrl) => {
         video.muted = true;
         video.playsInline = true;
 
-        video.addEventListener('loadeddata', () => {
+        video.addEventListener('loadedmetadata', () => {
             const seekTime = Math.min(1, video.duration - 0.1);
             video.currentTime = seekTime;
         });
@@ -27,8 +27,8 @@ export const captureFrameFromVideo = (videoUrl) => {
             }
         });
 
-        video.addEventListener('error', (err) => {
-            reject('Failed to load video: ' + err.message);
+        video.addEventListener('error', () => {
+            reject('Failed to load video: ' + (video.error?.message || 'Unknown error'));
         });
     });
 };

@@ -114,6 +114,11 @@ const ReelPage = ({ reel, isMuted, videoRef }) => {
         <div>
           <p className="font-bold mt-1">{`${reel.user?.firstName || ""} ${reel.user?.lastName || ""}`}</p>
           <p>{reel.description}</p>
+          <p>
+          {new Date(reel.createdAt).getDate()}{" "}
+          {new Date(reel.createdAt).toLocaleString("default", { month: "short" })}
+        </p>
+
         </div>
       </div>
 

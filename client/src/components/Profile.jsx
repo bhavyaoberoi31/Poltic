@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useReels } from "../features/reel/customeHooks";
 import defaultThumbnail from '../assets/image2.png';
 import { FaUser, FaUserCircle } from "react-icons/fa";
+import { captureFrameFromVideo } from "../utils/captureFrameFromVideo";
 
 const Profile = () => {
     const location = useLocation();
@@ -46,74 +47,6 @@ const Profile = () => {
         };
         checkFollowStatus();
     }, [creatorId, userId]);
-
-    const captureFrameFromVideo = (videoUrl, reelId) => {
-        return new Promise((resolve) => {
-            console.log(`Starting thumbnail generation for reel ${reelId} with URL: ${videoUrl}`);
-
-            const video = document.createElement("video");
-            video.crossOrigin = "anonymous";
-            video.muted = true;
-            video.preload = "metadata";
-
-            video.onerror = () => {
-                console.error(`Error loading video for reel ${reelId}: ${videoUrl}`);
-                resolve(defaultThumbnail);
-            };
-
-            video.onloadedmetadata = () => {
-                console.log(`Metadata loaded for reel ${reelId}. Duration: ${video.duration}`);
-                if (!video.duration || isNaN(video.duration)) {
-                    console.warn(`Invalid duration for reel ${reelId}`);
-                    resolve(defaultThumbnail);
-                    return;
-                }
-                video.currentTime = Math.min(video.duration * 0.25, video.duration);
-            };
-
-            video.onseeked = () => {
-                console.log(`Seeked to 25% for reel ${reelId}`);
-                try {
-                    const canvas = document.createElement("canvas");
-                    canvas.width = 480;
-                    canvas.height = 270;
-                    const ctx = canvas.getContext("2d");
-
-                    if (!ctx) {
-                        console.warn(`Failed to get canvas context for reel ${reelId}`);
-                        resolve(defaultThumbnail);
-                        return;
-                    }
-
-                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                    const thumbnail = canvas.toDataURL("image/jpeg", 0.7);
-                    console.log(`Thumbnail generated for reel ${reelId}`);
-                    resolve(thumbnail);
-                } catch (error) {
-                    console.error(`Error capturing frame for reel ${reelId}:`, error);
-                    resolve(defaultThumbnail);
-                } finally {
-                    video.remove();
-                }
-            };
-
-            const timeout = setTimeout(() => {
-                console.warn(`Thumbnail generation timed out for reel ${reelId}`);
-                resolve(defaultThumbnail);
-            }, 5000);
-
-            video.oncanplay = () => {
-                console.log(`Video can play for reel ${reelId}`);
-                clearTimeout(timeout);
-                if (video.currentTime === 0) {
-                    video.currentTime = Math.min(video.duration * 0.25, video.duration);
-                }
-            };
-
-            video.src = videoUrl;
-            video.load();
-        });
-    };
 
     const [thumbnails, setThumbnails] = useState({});
 

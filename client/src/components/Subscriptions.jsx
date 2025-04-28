@@ -38,6 +38,36 @@ const Subscriptions = () => {
                                                "/creator-profile",
                                               {
                                                 state: {
+                                                  creatorId: "680708485777a65baa93dfd0",
+                                                  firstName: "Poltic",
+                                                  lastName: "",
+                                                  userId: "680708485777a65baa93dfd0",
+                                                },
+                                              }
+                                            );
+                                          }}
+                                         >
+                                            <div>
+                                                <img src={"https://poltic.in/api/uploads/profiles/1745593704707-520438465.png"} alt="" className="h-[75px] w-[75px] rounded-full object-cover" />
+                                            </div>
+                                            <div>
+                                                <p className="text-[18px] ">PolTic Official</p>
+                                                <p className="text-[13px] text-[#B7B7B7]">@polticofficial</p>
+                                                <p className="text-[13px] text-[#065FD4]">10<span className="text-[#B7B7B7]">Followers</span></p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <button className="bg-[#F0F0F0] rounded-md text-[#717171] text-[12px] px-3 py-2">Followed</button>
+                                        </div>
+                                       </div>
+                                       <div className="flex gap-12 w-full">
+                                         <div className="flex gap-3 w-full"
+                                         onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigate(
+                                               "/creator-profile",
+                                              {
+                                                state: {
                                                   creatorId: "680701825777a65baa93dfb3",
                                                   firstName: "Bhavya",
                                                   lastName: "",
@@ -56,36 +86,7 @@ const Subscriptions = () => {
                                                 <p className="text-[13px] text-[#B7B7B7]">@bhavya</p>
                                                 <p className="text-[13px] text-[#065FD4]">10<span className="text-[#B7B7B7]">Followers</span></p>
                                             </div>
-                                        </div>
-                                        <div>
-                                            <button className="bg-[#F0F0F0] rounded-md text-[#717171] text-[12px] px-3 py-2">Followed</button>
-                                        </div>
-                                       </div>
-                                       <div className="flex gap-12 w-full">
-                                         <div className="flex gap-3 w-full"
-                                         onClick={(e) => {
-                                            e.stopPropagation();
-                                            navigate(
-                                               "/creator-profile",
-                                              {
-                                                state: {
-                                                  creatorId: "680708485777a65baa93dfd0",
-                                                  firstName: "Poltic",
-                                                  lastName: "",
-                                                  userId: "680708485777a65baa93dfd0",
-                                                },
-                                              }
-                                            );
-                                          }}
-                                         >
-                                            <div>
-                                                <img src={"https://poltic.in/api/uploads/profiles/1745593704707-520438465.png"} alt="" className="h-[75px] w-[75px] rounded-full object-cover" />
-                                            </div>
-                                            <div>
-                                                <p className="text-[18px] ">PolTic</p>
-                                                <p className="text-[13px] text-[#B7B7B7]">@poltic</p>
-                                                <p className="text-[13px] text-[#065FD4]">10<span className="text-[#B7B7B7]">Followers</span></p>
-                                            </div>
+                                        
                                         </div>
                                         <div>
                                             <button className="bg-[#F0F0F0] rounded-md text-[#717171] text-[12px] px-3 py-2">Followed</button>
