@@ -42,6 +42,7 @@ const Subscriptions = () => {
                                                   firstName: "Poltic",
                                                   lastName: "",
                                                   userId: "680708485777a65baa93dfd0",
+                                                  userImage: "https://poltic.in/api/uploads/profiles/1745593704707-520438465.png"
                                                 },
                                               }
                                             );
@@ -72,6 +73,7 @@ const Subscriptions = () => {
                                                   firstName: "Bhavya",
                                                   lastName: "",
                                                   userId: "680701825777a65baa93dfb3",
+                                                  userImage: "https://poltic.in/api/uploads/profiles/1745593676823-96162421.jpg"
                                                 },
                                               }
                                             );
