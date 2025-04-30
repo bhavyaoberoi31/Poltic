@@ -141,7 +141,7 @@ const Profile = () => {
                     </div>
                     <hr />
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 mt-5 gap-6 justify-center items-center mx-auto px-4 md:max-w-7xl">
-                        {reels && reels.length > 0 && reels.map((short) => (
+                        {reels && reels.length > 0 && [...reels].reverse().map((short) => (
                             <Link
                                 to={`/short/${short._id}`}
                                 key={short.id}

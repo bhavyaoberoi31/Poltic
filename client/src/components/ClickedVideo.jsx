@@ -41,7 +41,6 @@ const ClickedVideo = () => {
       try {
         setLoading(true);
         const response = await dispatch(getReelById(id)).unwrap(); 
-        console.log(response, "he");
         
         setShort(response);
       } catch (err) {
@@ -153,6 +152,10 @@ const ClickedVideo = () => {
               <div>
                 <p className="font-bold mt-1">{`${short.user?.firstName || ""} ${short.user?.lastName || ""}`}</p>
                 <p>{short .description}</p>
+                <p>
+                  {new Date(short.createdAt).getDate()}{" "}
+                  {new Date(short.createdAt).toLocaleString("default", { month: "short" })}
+                </p>
               </div>
             </div>
       
