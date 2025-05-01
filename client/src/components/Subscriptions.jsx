@@ -42,14 +42,14 @@ const Subscriptions = () => {
                                                   firstName: "Poltic",
                                                   lastName: "",
                                                   userId: "680708485777a65baa93dfd0",
-                                                  userImage: "https://poltic.in/api/uploads/profiles/1745593704707-520438465.png"
+                                                  userImage: "https://poltic.in/api/uploads/profiles/1746077435270-958671623.jpg"
                                                 },
                                               }
                                             );
                                           }}
                                          >
                                             <div>
-                                                <img src={"https://poltic.in/api/uploads/profiles/1745593704707-520438465.png"} alt="" className="h-[75px] w-[75px] rounded-full object-cover" />
+                                                <img src={"https://poltic.in/api/uploads/profiles/1746077435270-958671623.jpg"} alt="" className="h-[75px] w-[75px] rounded-full object-cover" />
                                             </div>
                                             <div>
                                                 <p className="text-[18px] ">PolTic Official</p>
@@ -73,14 +73,14 @@ const Subscriptions = () => {
                                                   firstName: "Bhavya",
                                                   lastName: "",
                                                   userId: "680701825777a65baa93dfb3",
-                                                  userImage: "https://poltic.in/api/uploads/profiles/1745593676823-96162421.jpg"
+                                                  userImage: "https://poltic.in/api/uploads/profiles/1746076372338-391794571.jpg"
                                                 },
                                               }
                                             );
                                           }}
                                          >
                                             <div>
-                                                <img src={"https://poltic.in/api/uploads/profiles/1745593676823-96162421.jpg"} alt="" className="h-[75px] w-[75px] rounded-full object-cover" />
+                                                <img src={"https://poltic.in/api/uploads/profiles/1746076372338-391794571.jpg"} alt="" className="h-[75px] w-[75px] rounded-full object-cover" />
                                                 {/* <FaUserCircle size={60} className="text-black"/> */}
                                             </div>
                                             <div>

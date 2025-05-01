@@ -150,9 +150,9 @@ const Dashboard = () => {
                 ) : (
                     <div className="sm:m-4 font-roboto">
                         <p className="font-semibold text-[20px] py-2 font-inter mt-5">Top Performing News</p>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mx-auto max-w-7xl">
-                            {localReels.slice(0, 4).slice().reverse().map((short) => (
-                                <div className="" key={short._id}>
+                        <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mx-auto max-w-7xl">
+                            {localReels.reverse().map((short) => (
+                                <div className="flex flex-col text-center items-center justify-center" key={short._id}>
                                     <Link to={`/short/${short._id}`} className="flex flex-col">
                                         <img
                                             src={ short.thumbnail || thumbnails[short._id] || img }
@@ -166,7 +166,7 @@ const Dashboard = () => {
                                             }}
                                         />
                                     </Link>
-                                    <div className="flex items-center justify-start w-full text-wrap text-center">
+                                    <div className="flex items-center justify-center w-full text-wrap text-center">
                                         <div className="flex flex-col items-start">
                                             <p className="font-light mt-2">{short.title}</p>
                                             {/* <p className="text-[14px] font-light">{short.views} views</p> */}
