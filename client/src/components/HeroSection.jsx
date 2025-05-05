@@ -1,6 +1,7 @@
 // import { useNavigate } from "react-router-dom"
 import img from "../assets/Vector.png"
 import img1 from "../assets/v1.jpg"
+import img2 from '../assets/thumb.png';
 import { ItemList } from "../constants/ItemList";
 
 const HeroSection = () => {
@@ -10,11 +11,11 @@ const HeroSection = () => {
       <div className="p-4 md:p-10 flex flex-col md:flex-row md:justify-between">
         <div className="md:w-[40%] md:p-10">
           <div className="flex justify-center md:justify-normal">
-          <span className=" bg-gradient-to-b from-transparent via-transparent text-[38px] md:text-[60px] font-medium to-[#A6CCFF]">
-            News by You
+          <span className=" bg-gradient-to-b from-transparent via-transparent text-[38px] md:text-[60px] text-center font-medium to-[#A6CCFF]">
+          #Be the Journalist instead of news by you In just 1 Minute of Video!
           </span>
           </div>
-          <p className="text-[38px] text-center md:text-start md:text-[60px] font-medium">In just 1 Minute of Video!</p>
+          <p className="text-[38px] text-center md:text-start md:text-[60px] font-medium"></p>
           <p className="text-[18px] text-center md:text-start py-4 text-[#23291FCC]">
             Share and Discover the Latest Political Opinions, Trending Issues, and Breaking News. All in Quick Videos from Everyday Citizens!
           </p>
@@ -26,8 +27,8 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-        <div className="md:py-10 rounded-md">
-          <div className="w-[351px] md:w-[587px] h-[244px] md:h-[358px] bg-[#F8E8E8] rounded-md" />
+        <div className="flex p-5 rounded-md border bg-[#F8E8E8]">
+          <img src={img2} className="w-[351px] md:w-[587px] h-[244px] md:h-[358px] object-contain mx-auto my-auto" />
         </div>
       </div>
       <div
