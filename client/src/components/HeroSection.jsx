@@ -1,10 +1,13 @@
-// import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import img from "../assets/Vector.png"
 import img1 from "../assets/v1.jpg"
 import img2 from '../assets/thumb.png';
 import { ItemList } from "../constants/ItemList";
 
 const HeroSection = () => {
+
+  const navigate = useNavigate()
+
   return (
     <div className="font-inter bg-no-repeat bg-right-bottom md:h-[1200px]" 
     style={{ backgroundImage: `url(${img1})` }}>
@@ -21,13 +24,15 @@ const HeroSection = () => {
           </p>
           <div className="flex justify-center md:justify-normal mr-6">
             <div className="text-sm font-medium py-4">
-              <button className="px-6 p-3 bg-[#032347] rounded-md text-white">
+              <button className="px-6 p-3 bg-[#032347] rounded-md text-white"
+               onClick={() => navigate("/login")}
+              >
                 Get Started
               </button>
             </div>
           </div>
         </div>
-        <div className="flex p-5 rounded-md border bg-[#F8E8E8]">
+        <div className="flex p-5 rounded-md bg-[#F8E8E8]">
           <img src={img2} className="w-[351px] md:w-[587px] h-[244px] md:h-[358px] object-contain mx-auto my-auto" />
         </div>
       </div>

@@ -27,6 +27,7 @@ import { Verify } from "./components/Verify";
 import Profile from "./components/Profile";
 import Breaking from "./components/Breaking";
 import ScrollToTop from "./components/ScrollToTop";
+import PrivacyPolicy from "./components/PrivacyPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +49,12 @@ function App() {
             <ProtectedRoute>
               <VideoPlay />
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/privacy-policy"
+          element={
+            <PrivacyPolicy />
           }
         />
         <Route
