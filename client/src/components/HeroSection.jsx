@@ -15,7 +15,7 @@ const HeroSection = () => {
         <div className="md:w-[40%] md:p-10">
           <div className="flex justify-center md:justify-normal">
           <span className=" bg-gradient-to-b from-transparent via-transparent text-[38px] md:text-[60px] text-center font-medium to-[#A6CCFF]">
-          #Be the Journalist instead of news by you In just 1 Minute of Video!
+          #Be the Journalist In just 1 Minute of Video!
           </span>
           </div>
           <p className="text-[38px] text-center md:text-start md:text-[60px] font-medium"></p>
