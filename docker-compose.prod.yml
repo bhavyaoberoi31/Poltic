@@ -29,7 +29,7 @@ services:
       - ./server/package.json:/usr/src/app/package.json
       - ./server/nodemon.json:/usr/src/app/nodemon.json
       - ./server/public:/usr/src/app/public
-      - ./uploads:/app/uploads
+      - ../uploads:/usr/srcapp/uploads
     ports:
       - '5000:5000'
     networks:
