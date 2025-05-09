@@ -18,7 +18,7 @@ const About = () => {
                 <p className="text-[24px] md:text-[48px] font-semibold text-center">PolTic: News for the <br className="hidden md:block" /> Next Generation</p>
             </div>
 
-            {/* About Section */}
+            {/* About Sectionc */}
             <div className="p-4 md:p-20">
                 <span className="px-4 py-2 my-2 rounded-xl bg-[#F3F5F7] text-[#032347] text-[12px] md:text-[15px] font-medium">About PolTic</span>
                 <p className="bg-gradient-to-b from-transparent via-transparent text-[16px] md:text-[44px] font-medium to-[#A6CCFF] w-fit my-2">Introduction</p>
