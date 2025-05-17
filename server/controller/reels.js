@@ -3,15 +3,22 @@ import Reels from "../model/Reels.js";
 import Report from "../model/Report.js";
 
 import dotenv from "dotenv";
+import ImageKit from "imagekit";
 
 dotenv.config();
 
 const serverUrl = process.env.SERVER_URL || "http://localhost:5000";
 
+const imagekit = new ImageKit({
+  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
+});
+
 export const createReel = async (req, res) => {
   try {
     const { title, description, userId } = req.body;
-    
+
     const videoFile = req.files.video?.[0];
     const thumbnailFile = req.files.thumbnail?.[0];
 
@@ -19,16 +26,28 @@ export const createReel = async (req, res) => {
       return res.status(400).json({ message: "Video file is required" });
     }
 
-    const videoPath = `${serverUrl}/uploads/reels/${videoFile.filename}`;
-    const thumbnailPath = thumbnailFile
-      ? `${serverUrl}/uploads/reels/${thumbnailFile.filename}`
-      : "";
+    // Upload video to ImageKit
+    const videoUpload = await imagekit.upload({
+      file: videoFile.buffer,
+      fileName: videoFile.originalname,
+      folder: "/reels/videos",
+    });
+
+    let thumbnailUrl = "";
+    if (thumbnailFile) {
+      const thumbUpload = await imagekit.upload({
+        file: thumbnailFile.buffer,
+        fileName: thumbnailFile.originalname,
+        folder: "/reels/thumbnails",
+      });
+      thumbnailUrl = thumbUpload.url;
+    }
 
     const reel = new Reels({
-      video: videoPath,
+      video: videoUpload.url,
       title,
       description,
-      thumbnail: thumbnailPath,
+      thumbnail: thumbnailUrl,
       userId,
     });
 

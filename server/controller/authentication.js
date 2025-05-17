@@ -3,8 +3,15 @@ import jwt from 'jsonwebtoken'
 import bcrypt from "bcryptjs"
 import { sendEmail } from "./sendEmail.js";
 import dotenv from "dotenv";
+import ImageKit from "imagekit";
 
 dotenv.config();
+
+const imagekit = new ImageKit({
+  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
+});
 
 const serverUrl = process.env.SERVER_URL || "http://localhost:5000";
 const createToken = async (user) => {
@@ -123,30 +130,38 @@ export const getCurrentUser = async (req, res) => {
 };
 
 export const updateProfile = async (req, res) => {
-    const id = req.query.id;
-    try {
-      let updates = { ...req.body };
-  
-      if (req.file) {
-        const imageUrl = `${serverUrl}/uploads/profiles/${req.file.filename}`;
-        updates = {
-            ...updates,
-            profileImage: imageUrl,
-            };
-        }
-      console.log(updates, 'up');
-      
-      const updatedUser = await User.findByIdAndUpdate(id, updates, { new: true });
-  
-      if (!updatedUser) {
-        return res.status(404).json({ message: "User not found" });
-      }
-  
-      res.status(200).json(updatedUser);
-    } catch (error) {
-      res.status(500).json({ message: error?.message });
+  const id = req.query.id;
+
+  try {
+    let updates = { ...req.body };
+    console.log("this is for updates", updates);
+    
+    if (req.file) {
+      const buffer = req.file.buffer; // Get in-memory file buffer
+
+      const uploadResponse = await imagekit.upload({
+        file: buffer,
+        fileName: req.file.originalname,
+        folder: "/profiles", // optional
+      });
+
+      updates = {
+        ...updates,
+        profileImage: uploadResponse.url,
+      };
     }
-  };
+
+    const updatedUser = await User.findByIdAndUpdate(id, updates, { new: true });
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: error?.message });
+  }
+};
   
 
 
