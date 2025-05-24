@@ -8,7 +8,6 @@ const router = Router();
 router.route('/signup').post(signup)
 router.route('/login').post(login);
 router.route('/logout').post(verifyToken, logout);
-router.route('/current').get(verifyToken, getCurrentUser);
 router.route('/auth/google').post(googleLogin);
 router
   .route("/update")
