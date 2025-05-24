@@ -31,7 +31,7 @@ import PrivacyPolicy from "./components/PrivacyPage";
 
 function App() {
   const dispatch = useDispatch();
-
+  console.log(import.meta.env.VITE_GOOGLE_CLIENT_ID)
   useEffect(() => {
     dispatch(fetchCurrentUser());
   }, [dispatch]);
