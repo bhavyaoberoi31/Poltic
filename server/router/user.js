@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getCurrentUser, googleLogin, login, logout, signup, updateProfile, verifyUser } from "../controller/authentication.js";
+import { googleLogin, login, logout, signup, updateProfile, verifyUser } from "../controller/authentication.js";
 import { verifyToken } from "../middleware/auth.js";
 import { uploadProfile } from "../utils/multer.js";
 
