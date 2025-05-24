@@ -47,7 +47,7 @@ const Login = () => {
                 { token },
                 { withCredentials: true }
             );
-            const { data } = await axios.get(`${import.meta.env.
+            const { data } = await axios.get(`${import.meta.env.VITE_SERVER_URL}/v1/users/current`, { withCredentials: true });
             dispatch(setUser(data));
             
             navigate('/home');
