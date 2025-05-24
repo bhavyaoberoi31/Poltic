@@ -14,7 +14,6 @@ export const login = createAsyncThunk(
             );
             return response.data;
         } catch (error) {
-            console.log(error)
             const errorMessage = error.response?.data?.message || "Something went wrong";
             return rejectWithValue(errorMessage);
         }
@@ -51,7 +50,6 @@ export const fetchCurrentUser = createAsyncThunk(
             return response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "Failed to fetch current user";
-            console.log(errorMessage)
             return rejectWithValue(errorMessage);
         }
     }

@@ -49,7 +49,6 @@ const Signup = () => {
                 })
             ).unwrap().then((payload)=> {
                 console.log("Signup successful!");
-                console.log(signupData)
                 setLoading(false)
                 navigate("/email-confirmation");
             }).catch((error)=> {

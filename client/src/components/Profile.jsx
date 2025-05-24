@@ -70,7 +70,6 @@ const Profile = () => {
 
             await Promise.all(thumbnailPromises);
             setThumbnails(newThumbnails);
-            console.log("All generated thumbnails:", newThumbnails);
         };
 
         fetchThumbnails();
@@ -80,7 +79,7 @@ const Profile = () => {
         try {
             setOptimisticFollow(true);
             await dispatch(follow({ creatorId, userId })).unwrap();
-            console.log("Follow successful!");
+
         } catch (error) {
             console.error("Error following creator:", error);
             setOptimisticFollow(false);

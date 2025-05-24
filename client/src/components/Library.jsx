@@ -95,7 +95,6 @@ const Library = () => {
 
     const handleUpload = async () => {
         setUploadComplete(false); 
-        console.log('hiss');
         
         if (!selectedFile) return alert("Please select a file to upload.");
         if (!title) return alert("Please provide the title");
@@ -123,7 +122,6 @@ const Library = () => {
         } catch (error) {
             setUploading(false);
             alert("Error uploading file. Please try again.");
-            console.log(error);
         }
     };
 

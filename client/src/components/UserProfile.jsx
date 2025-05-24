@@ -57,7 +57,6 @@ const UserProfile = () => {
             dispatch(updateProfile({ id: user._id, formData }))
                 .unwrap()
                 .then((payload) => {
-                    console.log(payload);
                     setIsPopupOpen(false);
                     setSelectedFile(null);
                     setLoadingUpload(false);

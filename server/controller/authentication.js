@@ -56,7 +56,6 @@ export const signup = async (req, res) => {
       const isMailSend =  await  sendEmail(email , newUser) ; 
       // Generate token
       const token = await createToken(newUser);
-      console.log(token);
   
       // Set token in cookies
       res.cookie("token", token, {
@@ -163,18 +162,17 @@ export const logout = async (req, res) => {
         return res.status(500).json({ message: "Error while logging out" });
     }
 }
-// export const getCurrentUser = async (req, res) => {
-//     try {
-//         if (!req.user) {
-//             return res.status(401).json({ message: "Unauthorized" });
-//         }
-//         console.log(req.user)
-//         return res.status(200).json(req.user);
-//     } catch (error) {
-//         console.log("Error while getting the current user:", error);
-//         return res.status(500).json({ message: "Error while getting the current user" });
-//     }
-// };
+export const getCurrentUser = async (req, res) => {
+    try {
+        if (!req.user) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+        return res.status(200).json(req.user);
+    } catch (error) {
+        console.log("Error while getting the current user:", error);
+        return res.status(500).json({ message: "Error while getting the current user" });
+    }
+};
 
 export const updateProfile = async (req, res) => {
   const id = req.query.id;

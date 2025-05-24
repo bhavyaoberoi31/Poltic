@@ -9,6 +9,10 @@ const authSlice = createSlice({
         error: null,
     },
     reducers: {
+        setUser: (state, action) => {
+            state.data = action.payload;
+            state.error = null;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(login.pending, (state) => {
@@ -20,7 +24,6 @@ const authSlice = createSlice({
             state.error = null ; 
         })
         .addCase(login.rejected, (state, action) => {
-            console.log("this is from ---" , action.payload)
             state.loading = false;
             state.error = action.payload;
         })
@@ -74,4 +77,5 @@ const authSlice = createSlice({
     },
 })
 
+export const { setUser } = authSlice.actions;
 export default authSlice.reducer;

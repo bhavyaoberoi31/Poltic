@@ -7,7 +7,6 @@ import { FaUserCircle } from "react-icons/fa";
 const Nav = () => {
     const navigate = useNavigate();
     const { data: user } = useSelector((state) => state.auth);
-    console.log(user, "this is from the Nav ")
     return (
         <div className="sticky h-[53px] md:h-[89px] flex justify-between items-center bg-white font-roboto md:bg-[#F6F6F6] ">
             <div className="md:hidden bg-[#E0E9F3] h-[33px] w-[33px] rounded-full flex items-center justify-center ml-2">

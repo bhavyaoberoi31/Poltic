@@ -8,6 +8,7 @@ import { useState } from "react";
 import { login } from "../features/auth/authThunk";
 import { GoogleLogin } from '@react-oauth/google';
 import axios from "axios";
+import { setUser } from "../features/auth/authSlice";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -46,8 +47,10 @@ const Login = () => {
                 { token },
                 { withCredentials: true }
             );
-            console.log(res.data);
-            window.location.href = "/home";
+            const { data } = await axios.get(`${import.meta.env.
+            dispatch(setUser(data));
+            
+            navigate('/home');
         } catch (error) {
             setErrorMessage("Google login failed.");
         }
