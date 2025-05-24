@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs"
 import { sendEmail } from "./sendEmail.js";
 import dotenv from "dotenv";
 import ImageKit from "imagekit";
+import { OAuth2Client } from 'google-auth-library';
 
 dotenv.config();
 
@@ -12,6 +13,8 @@ const imagekit = new ImageKit({
   privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
   urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
 });
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const serverUrl = process.env.SERVER_URL || "http://localhost:5000";
 const createToken = async (user) => {
@@ -103,6 +106,50 @@ export const login = async (req , res ) => {
 }
 
 
+
+export const googleLogin = async (req, res) => {
+  try {
+    const { token } = req.body;
+    console.log(token);
+    
+    if (!token) return res.status(400).json({ message: 'No token provided' });
+
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+    const { email, given_name, family_name } = payload;
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await User.create({
+        firstName: given_name || 'Google',
+        lastName: family_name || 'User',
+        email,
+        password: null,
+      });
+    }
+
+    const jwtToken = await createToken(user);
+
+    res.cookie('token', jwtToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+    });
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Google login error:', error);
+    res.status(500).json({ message: 'Google login failed' });
+  }
+};
+
+
+
 export const logout = async (req, res) => {
     try {
         res.clearCookie("token", {
@@ -116,18 +163,18 @@ export const logout = async (req, res) => {
         return res.status(500).json({ message: "Error while logging out" });
     }
 }
-export const getCurrentUser = async (req, res) => {
-    try {
-        if (!req.user) {
-            return res.status(401).json({ message: "Unauthorized" });
-        }
-        console.log(req.user)
-        return res.status(200).json(req.user);
-    } catch (error) {
-        console.log("Error while getting the current user:", error);
-        return res.status(500).json({ message: "Error while getting the current user" });
-    }
-};
+// export const getCurrentUser = async (req, res) => {
+//     try {
+//         if (!req.user) {
+//             return res.status(401).json({ message: "Unauthorized" });
+//         }
+//         console.log(req.user)
+//         return res.status(200).json(req.user);
+//     } catch (error) {
+//         console.log("Error while getting the current user:", error);
+//         return res.status(500).json({ message: "Error while getting the current user" });
+//     }
+// };
 
 export const updateProfile = async (req, res) => {
   const id = req.query.id;

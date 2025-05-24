@@ -28,7 +28,7 @@ const schema = mongoose.Schema({
     }, 
     password:{
          type:String, 
-         required:true 
+         required:false 
     }, 
     hasBlueBadge:{
          type:Boolean, 
