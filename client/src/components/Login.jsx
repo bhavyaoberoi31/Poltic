@@ -8,8 +8,6 @@ import { useState } from "react";
 import { login } from "../features/auth/authThunk";
 import { GoogleLogin } from '@react-oauth/google';
 import axios from "axios";
-import dotenv from "dotenv";
-dotenv.config();
 
 const Login = () => {
     const dispatch = useDispatch();
