@@ -125,10 +125,11 @@ export const googleLogin = async (req, res) => {
 
     if (!user) {
       user = await User.create({
-        firstName: given_name || 'Google',
-        lastName: family_name || 'User',
+        firstName: given_name || 'User',
+        lastName: family_name || '',
         email,
         password: null,
+        isVerified: true
       });
     }
 
