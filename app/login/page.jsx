@@ -50,7 +50,7 @@ const Login = () => {
       console.log(res);
       
       if(res.tokenExpiry) {
-        localStorage.setItem('tokenExpiry', res.tokenExpiry);
+        localStorage.setItem('tokenExpiry', String(res.tokenExpiry));
         router.push("/home");
       }
     } catch (error) {
