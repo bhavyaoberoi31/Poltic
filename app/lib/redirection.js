@@ -10,7 +10,7 @@ export function useRedirectIfAuthenticated() {
   useEffect(() => {
     const expiry = localStorage.getItem('tokenExpiry');
     
-    if (expiry && Date.now() < +expiry) {
+    if (expiry && Date.now() < Number(expiry)) {
       router.replace('/home');
     }
   }, []);
@@ -21,7 +21,7 @@ export function useRedirectIfNotAuthenticated() {
 
   useEffect(() => {
     const expiry = localStorage.getItem('tokenExpiry');
-    if (!expiry || Date.now() > +expiry) {
+    if (!expiry || Date.now() > Number(expiry)) {
       router.replace('/login');
     }
   }, []);

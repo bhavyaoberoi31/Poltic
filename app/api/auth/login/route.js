@@ -23,7 +23,7 @@ export async function POST(req) {
     const token = createToken(user);
     const response =  NextResponse.json({
       message: 'Login successful',
-      tokenExpiry: Date.now() + 24 * 60 * 60 * 1000 * 14
+      tokenExpiry: Date.now() + 24 * 60 * 60 * 1000 * 30
     }, { status: 200 });
 
     response.cookies.set({
@@ -33,7 +33,7 @@ export async function POST(req) {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 24 * 60 * 60* 1000 * 14,
+      maxAge: 24 * 60 * 60* 1000 * 30,
     })
 
     return response;
