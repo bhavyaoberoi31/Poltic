@@ -30,7 +30,7 @@ const Login = () => {
       setLoading(true);
       const res = await signIn({ email, password });
       if(res.tokenExpiry) {
-        localStorage.setItem('tokenExpiry', res.tokenExpiry);
+        localStorage.setItem('tokenExpiry', String(res.tokenExpiry));
         router.push("/home");
       }
 
