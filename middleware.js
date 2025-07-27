@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { verifyToken } from './app/lib/jwt';
 
-const PUBLIC_PATHS = ['/api/auth'];
+const PUBLIC_PATHS = ['/api/auth', '/api/health'];
 
 export async function middleware(request) {
   const { pathname } = request.nextUrl;
