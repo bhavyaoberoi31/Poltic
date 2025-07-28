@@ -10,7 +10,10 @@ export function useRedirectIfAuthenticated() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       const expiry = localStorage.getItem('tokenExpiry');
-      if (expiry && Date.now() < Number(expiry)) {
+      console.log(expiry);
+      console.log(Date.now(), new Date(Number(expiry)));
+      
+      if (expiry && Date.now() < new Date(expiry)) {
         router.replace('/home');
       }
     }, 100);
