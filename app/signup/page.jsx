@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { Dot } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { signUp } from '../services/api.service';
 
@@ -16,6 +16,13 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [confPassword, setConfPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+   useEffect(() => {
+      const loggedIn = localStorage.getItem("loggedIn");
+      if (loggedIn) {
+        router.push("/home");
+      }
+    }, [router]);
 
   const handleSignup = async (e) => {
     e.preventDefault();

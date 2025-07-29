@@ -3,20 +3,25 @@
 import Image from "next/image";
 import { ArrowRight, Dot } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { googleLogin, signIn } from "../services/api.service";
-import { useRedirectIfAuthenticated } from "../lib/redirection";
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 
 const Login = () => {
 
-  useRedirectIfAuthenticated();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("loggedIn");
+    if (loggedIn) {
+      router.push("/home");
+    }
+  }, [router]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -29,10 +34,8 @@ const Login = () => {
     try {
       setLoading(true);
       const res = await signIn({ email, password });
-      if(res.tokenExpiry) {
-        localStorage.setItem('tokenExpiry', String(res.tokenExpiry));
-        router.push("/home");
-      }
+      localStorage.setItem("loggedIn", true);
+      router.push("/home");
 
 
     } catch (error) {
@@ -47,12 +50,9 @@ const Login = () => {
       setLoading(true);
       const token = credentialResponse.credential;
       const res = await googleLogin({ token });
-      console.log(res);
-      
-      if(res.tokenExpiry) {
-        localStorage.setItem('tokenExpiry', String(Date.now() + 24 * 60 * 60 * 1000 * 29));
-        router.push("/home");
-      }
+      localStorage.setItem("loggedIn", true);
+      router.push("/home");
+
     } catch (error) {
       console.log(error);
       

@@ -4,10 +4,8 @@ import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '../component/Navbar';
 import Sidebar from '../component/Sidebar';
-import { useRedirectIfAuthenticated } from '../lib/redirection';
 
 function Layout({ children }) {
- useRedirectIfAuthenticated();
 
   return (
     <div className="flex flex-col h-screen w-screen bg-background">

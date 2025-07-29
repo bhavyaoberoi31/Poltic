@@ -1,6 +1,10 @@
 import { servicesAxiosInstance } from "./config";
 
 
+export const checkLoggedIn = async () => {
+  const response = await servicesAxiosInstance.get('/auth/check');
+  return response.data;
+}
 
 export const signUp = async (payload) => {
   const response = await servicesAxiosInstance.post('auth/signup', payload);

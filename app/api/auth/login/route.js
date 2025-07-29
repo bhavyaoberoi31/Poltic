@@ -23,7 +23,6 @@ export async function POST(req) {
     const token = createToken(user);
     const response =  NextResponse.json({
       message: 'Login successful',
-      tokenExpiry: Date.now() + 24 * 60 * 60 * 1000 * 30
     }, { status: 200 });
 
     response.cookies.set({

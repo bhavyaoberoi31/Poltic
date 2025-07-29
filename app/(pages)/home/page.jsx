@@ -2,8 +2,28 @@
 
 import { motion } from 'framer-motion';
 import Feed from '@/app/component/Feed';
+import { useEffect } from 'react';
+import { checkLoggedIn } from '@/app/services/api.service';
+import { useRouter } from 'next/navigation';
 
 function HomePage() {
+
+  const router = useRouter();
+
+  useEffect(() => {
+    (async() => {
+      try {
+        const res = await checkLoggedIn();
+        if(!res.valid) {
+          localStorage.removeItem('loggedIn');
+          router.push('/login');
+        }
+      } catch (error) {
+        router.push('/login');
+      }
+    })()
+  }, [])
+  
 
   return (
     <div className="w-full h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 overflow-hidden">

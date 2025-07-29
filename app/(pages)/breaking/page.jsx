@@ -257,7 +257,7 @@ const BreakingPage = () => {
     >
       <motion.div
         className="
-          relative w-full max-w-md md:max-w-lg lg:max-w-xl
+          relative w-fit max-w-md md:max-w-lg lg:max-w-xl
           rounded-2xl shadow-2xl bg-gradient-to-b from-neutral-900/95 to-neutral-900/80
           overflow-hidden px-0 py-0
         "
