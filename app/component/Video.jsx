@@ -153,7 +153,13 @@ const Video = ({ reel, isMuted, videoRef }) => {
             {/* User Info */}
             <div
               className="flex items-center gap-3 mb-3 cursor-pointer"
-              onClick={() => router.push(`/user/${reel.userId._id}`)}
+              onClick={() => {
+                if(reel.userId._id == localStorage.getItem("id")) {
+                  router.push("/profile/dashboard");
+                } else {
+                  router.push(`/user/${reel.userId._id}`)}}
+
+                }              
             >
               <motion.div
                 className="relative"

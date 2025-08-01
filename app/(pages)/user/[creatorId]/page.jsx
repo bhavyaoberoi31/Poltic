@@ -260,28 +260,23 @@ const ProfilePage = () => {
               <p className="mt-4 text-gray-600">Loading reels...</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 mt-5 gap-6 justify-center items-center mx-auto px-4 md:max-w-7xl">
-              {[...reels].reverse().map((reel) => (
-                <motion.div
-                  key={reel._id}
-                  className="flex flex-col w-full max-w-[200px] mx-auto cursor-pointer"
-                  onClick={() => openReelPopup(reel)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 25 }}
-                >
-                  <img
-                    src={reel.thumbnailUrl || thumbnails[reel._id] }
-                    alt={reel.title}
-                    className="h-[200px] md:h-[265px] w-full object-cover rounded-lg hover:shadow-lg transition-shadow"
-                  />
-                  <div className="text-center">
-                    <p className="font-light mt-2 truncate">{reel.title}</p>
-                    <p className="text-[14px] font-light">{reel.views}</p>
-                  </div>
-                </motion.div>
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
+          {reels.map((reel) => (
+            <div
+              className="flex flex-col  items-center justify-center rounded-xl overflow-hidden w-full"
+              key={reel._id}
+            >
+              <div className=" w-full aspect-[9/16] rounded-2xl overflow-hidden">
+                <img
+                  src={reel.thumbnailUrl || thumbnails[reel._id] || '/assets/thumb.png'}
+                  alt={reel.title || 'reel thumbnail'}
+                  className="w-full h-full object-cover transition-transform duration-500"
+                />
+              </div>
+              <p className="absolute bottom-2 left-2 text-sm truncate text-left text-white bg-black/40 px-2 rounded">
+                {reel.title}
+              </p>
+            </div>
               ))}
             </div>
           )}

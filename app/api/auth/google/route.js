@@ -28,7 +28,7 @@ export async function POST(req) {
     const jwtToken = createToken(user);
     const response =  NextResponse.json({
       message: 'Login successful',
-      tokenExpiry: Date.now() + 24 * 60 * 60 * 14
+      id: user._id
     }, { status: 200 });
     response.cookies.set({
       name: 'token',

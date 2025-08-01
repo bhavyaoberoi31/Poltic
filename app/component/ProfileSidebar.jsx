@@ -12,6 +12,7 @@ import {
   LogOut,
 } from 'lucide-react';
 import { uploadProfileImg } from '../services/api.service';
+import axios from 'axios';
 
 const NAV_LINKS = [
   { label: 'Dashboard', href: '/profile/dashboard', icon: LayoutDashboard },
@@ -41,9 +42,10 @@ const ProfileSidebar = () => {
 
   const isActive = (path) => pathname === path;
 
-  const handleLogout = () => {
-    alert('Logged out!');
-    localStorage.removeItem('tokenExpiry');
+  const handleLogout = async () => {
+    alert('Logged outsgsdfg!');
+    localStorage.removeItem('loggedIn');
+    // await axios.post('/api/logout');
     router.push('/');
   };
 

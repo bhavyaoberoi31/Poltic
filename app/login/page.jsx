@@ -35,6 +35,7 @@ const Login = () => {
       setLoading(true);
       const res = await signIn({ email, password });
       localStorage.setItem("loggedIn", true);
+      localStorage.setItem("id", res.id);
       router.push("/home");
 
 
@@ -50,6 +51,7 @@ const Login = () => {
       setLoading(true);
       const token = credentialResponse.credential;
       const res = await googleLogin({ token });
+      localStorage.setItem("id", res.id);
       localStorage.setItem("loggedIn", true);
       router.push("/home");
 

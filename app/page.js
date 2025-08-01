@@ -64,6 +64,13 @@ export default function LandingPage() {
     { number: '4.8★', label: 'User Rating' }
   ];
 
+  useEffect(() => {
+      const loggedIn = localStorage.getItem("loggedIn");
+      if (loggedIn) {
+        router.push("/home");
+      }
+    }, [router]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       {/* Modern Navbar */}
