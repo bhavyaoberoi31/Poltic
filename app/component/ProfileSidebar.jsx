@@ -43,7 +43,7 @@ const ProfileSidebar = () => {
   const isActive = (path) => pathname === path;
 
   const handleLogout = async () => {
-    alert('Logged outsgsdfg!');
+    alert('Logged out!');
     localStorage.removeItem('loggedIn');
     // await axios.post('/api/logout');
     router.push('/');

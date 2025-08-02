@@ -12,7 +12,7 @@ const SubscribedChannels = [
   { name: "Priya", attherate: "@priyavibes", followers: "10" },
   { name: "Mohit Gupta", attherate: "@mohitgupta_07", followers: "10" },
   { name: "Ashish", attherate: "@theashishshow", followers: "10" },
-  { name: "Mamta", attherate: "@mamtaofficial", followers: "10" },
+  // { name: "Mamta", attherate: "@mamtaofficial", followers: "10" },
 ];
 
 export default function FollowedChannelsPage() {
@@ -22,31 +22,41 @@ export default function FollowedChannelsPage() {
   const topChannels = [
     {
       profile:
-        "https://poltic.in/api/uploads/profiles/1746700799385-909177772.jpg",
+        "https://reels-poltic.b-cdn.net/1754072074859-1000036494.png",
       name: "PolTic Official",
       attherate: "@polticofficial",
       followers: "10",
-      creatorId: "680708485777a65baa93dfd0",
-      userId: "680708485777a65baa93dfd0",
-      userImage: "https://poltic.in/api/uploads/profiles/1746700799385-909177772.jpg",
+      creatorId: "688d03c489562cd4f73509dc",
+      userId: "688d03c489562cd4f73509dc",
+      userImage: "https://reels-poltic.b-cdn.net/1754072074859-1000036494.png",
     },
     {
       profile:
-        "https://poltic.in/api/uploads/profiles/1746700717291-169298483.jpg",
+        "https://reels-poltic.b-cdn.net/1754073027260-1000047996.jpg",
       name: "Bhavya Oberoi",
       attherate: "@bhavya",
       followers: "10",
-      creatorId: "680701825777a65baa93dfb3",
-      userId: "680701825777a65baa93dfb3",
-      userImage: "https://poltic.in/api/uploads/profiles/1746700717291-169298483.jpg",
+      creatorId: "687dbc083aa05c8b398ad946",
+      userId: "687dbc083aa05c8b398ad946",
+      userImage: "https://reels-poltic.b-cdn.net/1754073027260-1000047996.jpg",
     },
+    {
+      profile:
+        "https://reels-poltic.b-cdn.net/1754072866492-amit2.jpg",
+      name: "Amit Barmola",
+      attherate: "@amit",
+      followers: "10",
+      creatorId: "688d05a489562cd4f73509f6",
+      userId: "688d05a489562cd4f73509f6",
+      userImage: "https://reels-poltic.b-cdn.net/1754072866492-amit2.jpg",
+    }
   ];
 
   return (
     <div className="min-h-screen w-full bg-background px-4 py-8">
       <div className="max-w-2xl mx-auto flex flex-col">
         <h2 className="text-[22px] md:text-[26px] font-bold text-center mb-7">
-          All Followed Channels
+          All Followers
         </h2>
         <div className="grid gap-5">
           {/* Top channels with real images */}
@@ -56,7 +66,7 @@ export default function FollowedChannelsPage() {
               className="flex items-center justify-between bg-card border border-border rounded-lg px-5 py-4 shadow-sm hover:shadow-md transition"
               onClick={() =>
                 router.push(
-                  `/creator-profile?id=${ch.creatorId}`
+                  `/user/${ch.creatorId}`
                 )
               }
               style={{ cursor: "pointer" }}

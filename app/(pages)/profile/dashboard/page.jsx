@@ -158,7 +158,7 @@ export default function Page() {
 
   <div
     className="rounded-xl bg-white p-6 flex flex-col items-center justify-center cursor-pointer shadow-sm hover:shadow-md transition flex-1"
-    onClick={() => router.push('/user-subscriptions')}
+    onClick={() => router.push('/profile/subscriptions')}
   >
     <div className="rounded-full bg-blue-500 p-3">
       <Mail className="h-6 w-6 text-white" />
@@ -171,7 +171,6 @@ export default function Page() {
 
       {/* Reels Grid */}
       <div className="w-full">
-        <p className="font-bold text-xl sm:text-2xl py-4 mt-5">Top Performing News</p>
 
         {loading ? (
           <p className="text-gray-500 text-center mt-6">Loading...</p>
