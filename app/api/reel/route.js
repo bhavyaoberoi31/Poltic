@@ -1,129 +1,85 @@
-import connectToDatabase from "@/app/lib/mongoose";
-import Post from "@/app/models/Post";
-import { NextResponse } from "next/server";
+import formidable from 'formidable';
+import fs from 'fs';
+import Post from '@/app/models/Post';
+import connectToDatabase from '@/app/lib/mongoose';
 
 export const config = {
   api: {
-    bodyParser: {
-      sizeLimit: '100mb', 
-    },
+    bodyParser: false, // turn off default parser
   },
 };
 
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method Not Allowed' });
+  }
 
+  const form = new formidable.IncomingForm({ maxFileSize: 100 * 1024 * 1024 });
 
-export async function POST(req) {
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Form parsing error' });
+    }
 
-    try {
-        const formData = await req.formData();
-        const file = formData.get("file");
-        const description = formData.get("description");
-        const title = formData.get("title");
-        const img = formData.get("img");
-        const userId = req.headers.get('x-user-id');
-        let imgRes, imageFileName;
-        
-        if (!file) {
-            return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
-        }
-    
-        const buffer = Buffer.from(await file.arrayBuffer());
-        const fileName = `${Date.now()}-${file.name}`;
-        
-        const res = await fetch(`${process.env.BUNNY_STORAGE_URL}${fileName}`, {
-            method: "PUT",
-            headers: {
+    const file = files.file;
+    const description = fields.description;
+    const title = fields.title;
+    const img = fields.img;
+    const userId = req.headers['x-user-id'];
+
+    if (!file || !userId) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    const fileBuffer = fs.readFileSync(file.filepath);
+    const fileName = `${Date.now()}-${file.originalFilename}`;
+
+    const uploadRes = await fetch(`${process.env.BUNNY_STORAGE_URL}${fileName}`, {
+      method: 'PUT',
+      headers: {
+        AccessKey: process.env.BUNNY_STORAGE_KEY,
+        'Content-Type': 'application/octet-stream',
+      },
+      body: fileBuffer,
+    });
+
+    let thumbnailUrl = null;
+
+    if (img && typeof img === 'string' && img.startsWith('data:image')) {
+      const matches = img.match(/^data:(image\/\w+);base64,(.+)$/);
+      if (matches) {
+        const ext = matches[1].split('/')[1];
+        const imageFileName = `${Date.now()}.${ext}`;
+        const imgBuffer = Buffer.from(matches[2], 'base64');
+
+        const imgRes = await fetch(`${process.env.BUNNY_STORAGE_URL}${imageFileName}`, {
+          method: 'PUT',
+          headers: {
             AccessKey: process.env.BUNNY_STORAGE_KEY,
-            "Content-Type": "application/octet-stream",
-            },
-            body: buffer,
+            'Content-Type': 'application/octet-stream',
+          },
+          body: imgBuffer,
         });
 
-        if (img && typeof img === "string" && img.startsWith("data:image")) {
-          const matches = img.match(/^data:(image\/\w+);base64,(.+)$/);
-          if (matches) {
-            const mimeType = matches[1];
-            const base64Data = matches[2];
-            const ext = mimeType.split("/")[1];
-
-            imageFileName = `${Date.now()}.${ext}`;
-            const imgBuffer = Buffer.from(base64Data, "base64");
-
-            imgRes = await fetch(`${process.env.BUNNY_STORAGE_URL}${imageFileName}`, {
-              method: "PUT",
-              headers: {
-                AccessKey: process.env.BUNNY_STORAGE_KEY,
-                "Content-Type": "application/octet-stream",
-              },
-              body: imgBuffer,
-            });
-
-            if (!imgRes.ok) {
-              return NextResponse.json({ error: "Thumbnail upload failed" }, { status: 500 });
-            }
-          }
+        if (!imgRes.ok) {
+          return res.status(500).json({ error: 'Thumbnail upload failed' });
         }
 
-        if(!res.ok) {
-            return NextResponse.json({ error: "Not able to upload." }, { status: 500 });
-        }
-
-        await connectToDatabase()
-
-        const post = await Post.create({
-            userId,
-            videoUrl: `https://reels-poltic.b-cdn.net/${fileName}`,
-            thumbnailUrl: imgRes ? `https://reels-poltic.b-cdn.net/${imageFileName}` : null,
-            description,
-            title,
-        }) 
-
-        return NextResponse.json({ message: "Video uploaded successfully", post }, { status: 200 });
-
-        
-        
-    } catch (error) {
-        console.log(error);
-        return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
+        thumbnailUrl = `https://reels-poltic.b-cdn.net/${imageFileName}`;
+      }
     }
-
-}
-
-
-export async function GET(req) {
-  try {
-    const userId = req.headers.get("x-user-id");
-    if (!userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const { searchParams } = new URL(req.url);
-    const page = parseInt(searchParams.get("page") || "1", 10);
-    const limit = parseInt(searchParams.get("limit") || "10", 10);
-    const skip = (page - 1) * limit;
 
     await connectToDatabase();
 
-    const posts = await Post.find({ userId })
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit);
+    const post = await Post.create({
+      userId,
+      videoUrl: `https://reels-poltic.b-cdn.net/${fileName}`,
+      thumbnailUrl,
+      description,
+      title,
+    });
 
-    const total = await Post.countDocuments({ userId });
-
-    return NextResponse.json(
-      {
-        posts,
-        pagination: {
-          page,
-          limit,
-          totalPages: Math.ceil(total / limit),
-          total,
-        },
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
-  }
+    return res.status(200).json({ message: 'Upload successful', post });
+  });
 }
