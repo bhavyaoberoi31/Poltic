@@ -5,7 +5,9 @@ import connectToDatabase from '@/app/lib/mongoose';
 
 export const config = {
   api: {
-    bodyParser: false, // turn off default parser
+    bodyParser: false, 
+    responseLimit: '100mb',
+    externalResolver: true,
   },
 };
 
