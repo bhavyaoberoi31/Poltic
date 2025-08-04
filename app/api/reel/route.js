@@ -6,7 +6,7 @@ import connectToDatabase from '@/app/lib/mongoose';
 export const config = {
   api: {
     bodyParser: false, 
-    responseLimit: '100mb',
+    responseLimit: '500mb',
     externalResolver: true,
   },
 };
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  const form = new formidable.IncomingForm({ maxFileSize: 100 * 1024 * 1024 });
+  const form = new formidable.IncomingForm({ maxFileSize: 500 * 1024 * 1024 });
 
   form.parse(req, async (err, fields, files) => {
     if (err) {

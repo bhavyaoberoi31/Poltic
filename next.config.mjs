@@ -9,13 +9,13 @@ const nextConfig = {
   // Configure server runtime limits
   serverRuntimeConfig: {
     // Server-side configuration
-    maxRequestSize: '100mb',
+    maxRequestSize: '500mb',
   },
   
   // Public runtime configuration
   publicRuntimeConfig: {
     // Client-side configuration
-    maxUploadSize: '50mb',
+    maxUploadSize: '500mb',
   },
 
   // Add headers for CORS and content length if needed
