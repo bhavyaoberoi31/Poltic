@@ -4,6 +4,12 @@ import connectToDatabase from '@/app/lib/mongoose';
 
 export const maxDuration = 300;
 
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+}
+
 export async function POST(request) {
   try {
     const userId = request.headers.get('x-user-id');
