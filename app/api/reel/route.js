@@ -1,41 +1,29 @@
-import formidable from 'formidable';
-import fs from 'fs';
+import { NextResponse } from 'next/server';
 import Post from '@/app/models/Post';
 import connectToDatabase from '@/app/lib/mongoose';
 
-export const config = {
-  api: {
-    bodyParser: false, 
-    responseLimit: '500mb',
-    externalResolver: true,
-  },
-};
+export const maxDuration = 300;
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
-  }
-
-  const form = new formidable.IncomingForm({ maxFileSize: 500 * 1024 * 1024 });
-
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Form parsing error' });
+export async function POST(request) {
+  try {
+    const userId = request.headers.get('x-user-id');
+    
+    if (!userId) {
+      return NextResponse.json({ error: 'Missing user ID' }, { status: 400 });
     }
 
-    const file = files.file;
-    const description = fields.description;
-    const title = fields.title;
-    const img = fields.img;
-    const userId = req.headers['x-user-id'];
+    const formData = await request.formData();
+    const file = formData.get('file');
+    const description = formData.get('description');
+    const title = formData.get('title');
+    const img = formData.get('img');
 
-    if (!file || !userId) {
-      return res.status(400).json({ error: 'Missing required fields' });
+    if (!file) {
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    const fileBuffer = fs.readFileSync(file.filepath);
-    const fileName = `${Date.now()}-${file.originalFilename}`;
+    const fileBuffer = Buffer.from(await file.arrayBuffer());
+    const fileName = `${Date.now()}-${file.name}`;
 
     const uploadRes = await fetch(`${process.env.BUNNY_STORAGE_URL}${fileName}`, {
       method: 'PUT',
@@ -45,6 +33,10 @@ export default async function handler(req, res) {
       },
       body: fileBuffer,
     });
+
+    if (!uploadRes.ok) {
+      return NextResponse.json({ error: 'Video upload failed' }, { status: 500 });
+    }
 
     let thumbnailUrl = null;
 
@@ -65,7 +57,7 @@ export default async function handler(req, res) {
         });
 
         if (!imgRes.ok) {
-          return res.status(500).json({ error: 'Thumbnail upload failed' });
+          return NextResponse.json({ error: 'Thumbnail upload failed' }, { status: 500 });
         }
 
         thumbnailUrl = `https://reels-poltic.b-cdn.net/${imageFileName}`;
@@ -82,6 +74,9 @@ export default async function handler(req, res) {
       title,
     });
 
-    return res.status(200).json({ message: 'Upload successful', post });
-  });
+    return NextResponse.json({ message: 'Upload successful', post });
+  } catch (error) {
+    console.error('Upload error:', error);
+    return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
+  }
 }
