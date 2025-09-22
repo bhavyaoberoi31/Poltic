@@ -19,6 +19,7 @@ function HomePage() {
           router.push('/login');
         }
       } catch (error) {
+        localStorage.removeItem('loggedIn');
         router.push('/login');
       }
     })()
