@@ -21,7 +21,7 @@ export async function POST(req) {
     if (!isPasswordValid) return NextResponse.json({ message: 'Invalid credentials' }, { status: 400 });
 
     const token = createToken(user);
-    const response =  NextResponse.json({
+    const response = NextResponse.json({
       message: 'Login successful',
       id: user._id
     }, { status: 200 });
@@ -33,11 +33,13 @@ export async function POST(req) {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 24 * 60 * 60* 1000 * 30,
+      maxAge: 24 * 60 * 60 * 1000 * 30,
     })
 
     return response;
   } catch (err) {
+    console.log(err);
+
     return NextResponse.json({ message: "Internal Server error." }, { status: 500 });
   }
 }
